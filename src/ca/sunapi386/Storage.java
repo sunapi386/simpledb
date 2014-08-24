@@ -4,10 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Storage {
-    private static Map<String, String> keyValueMap = new HashMap<String, String>();
-    private static Map<String, Integer> numEqualToMap = new HashMap<String, Integer>();
+    private Map<String, String> keyValueMap = new HashMap<String, String>();
+    private Map<String, Integer> numEqualToMap = new HashMap<String, Integer>();
 
-    public static void set(String name, String value) {
+    public void set(String name, String value) {
         String previousValue = keyValueMap.containsKey(name) ? keyValueMap.get(name) : null;
         keyValueMap.put(name, value);
         if (numEqualToMap.containsKey(previousValue)) {
@@ -22,7 +22,7 @@ public class Storage {
         }
     }
 
-    public static void numEqualTo(String value) {
+    public void numEqualTo(String value) {
         Integer count = numEqualToMap.get(value);
         System.out.println(count == null ? 0 : count);
     }
@@ -34,7 +34,7 @@ public class Storage {
         numEqualToMap.put(value, newCount);
     }
 
-    public static void get(String name) {
+    public void get(String name) {
         if (keyValueMap.containsKey(name)) {
             System.out.println(keyValueMap.get(name));
         } else {
