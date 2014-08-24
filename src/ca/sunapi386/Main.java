@@ -12,12 +12,12 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanInput = new Scanner(in);
         String[] tokens;
-        List<Storage> snapshots = new ArrayList<Storage>();
-        snapshots.add(new Storage());
+        List<Snapshot> snapshots = new ArrayList<Snapshot>();
+        snapshots.add(new Snapshot());
 
         for (; ; ) {
             // always modify the last transaction state
-            Storage currentSnapshot = snapshots.get(snapshots.size() - 1);
+            Snapshot currentSnapshot = snapshots.get(snapshots.size() - 1);
             tokens = scanInput.nextLine().split(" ");
             String cmd = tokens[0];
             if (cmd.equals("SET")) {
@@ -48,7 +48,7 @@ public class Main {
             } else if (cmd.equals("END")) {
                 break;
             } else if (cmd.equals("BEGIN")) {
-                snapshots.add(new Storage(currentSnapshot));
+                snapshots.add(new Snapshot(currentSnapshot));
             } else if (cmd.equals("ROLLBACK")) {
                 if (snapshots.size() == 1) {
                     System.out.println("NO TRANSACTION");
@@ -56,7 +56,7 @@ public class Main {
                     snapshots.remove(snapshots.size() - 1);
                 }
             } else if (cmd.equals("COMMIT")) {
-                snapshots = new ArrayList<Storage>();
+                snapshots = new ArrayList<Snapshot>();
                 snapshots.add(currentSnapshot);
             }
         }

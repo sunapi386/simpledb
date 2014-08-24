@@ -3,19 +3,19 @@ package ca.sunapi386;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Storage {
+public class Snapshot {
     // Commands are GET, SET, UNSET, and NUMEQUALTO.
     // All of these commands have expected worst-case runtime of O(log N), where N is number of variables stored.
     // Using HashMap gives us this nice property. It's necessary to use two maps so NUMEQUALTO bound O(log N).
     private Map<String, String> keyValueMap ;
     private Map<String, Integer> numEqualToMap;
 
-    public Storage() {
+    public Snapshot() {
         keyValueMap = new HashMap<String, String>();
         numEqualToMap = new HashMap<String, Integer>();
     }
 
-    public Storage(Storage another) {
+    public Snapshot(Snapshot another) {
         this.keyValueMap = new HashMap<String, String>();
         this.keyValueMap.putAll(another.keyValueMap);
         this.numEqualToMap = new HashMap<String, Integer>();
