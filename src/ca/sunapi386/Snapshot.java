@@ -3,11 +3,14 @@ package ca.sunapi386;
 import java.util.HashMap;
 import java.util.Map;
 
+/*
+ * Any command runs O(log N), where N is number of variables stored.
+ * It's necessary to use two HashMaps so NUMEQUALTO bound O(log N) without walking the map.
+ */
+
 public class Snapshot {
-    // Commands are GET, SET, UNSET, and NUMEQUALTO.
-    // All of these commands have expected worst-case runtime of O(log N), where N is number of variables stored.
-    // Using HashMap gives us this nice property. It's necessary to use two maps so NUMEQUALTO bound O(log N).
-    private Map<String, String> keyValueMap ;
+    // All of these
+    private Map<String, String> keyValueMap;
     private Map<String, Integer> numEqualToMap;
 
     public Snapshot() {
