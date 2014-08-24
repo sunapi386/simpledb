@@ -5,15 +5,19 @@ import java.util.List;
 import java.util.Scanner;
 
 import static java.lang.System.in;
+
 // http://www.thumbtack.com/challenges/software-engineer
 public class Main {
 
     public static void main(String[] args) {
         Scanner scanInput = new Scanner(in);
         String[] tokens;
-        Storage storage = new Storage();
+        List<Storage> snapshots = new ArrayList<Storage>();
+        snapshots.add(new Storage());
 
         for (; ; ) {
+            // always modify the last transaction state
+            Storage currentSnapshot = snapshots.get(snapshots.size() - 1);
             tokens = scanInput.nextLine().split(" ");
             String cmd = tokens[0];
             if (cmd.equals("SET")) {
@@ -22,33 +26,38 @@ public class Main {
                 }
                 String name = tokens[1];
                 String value = tokens[2];
-                storage.set(name, value);
+                currentSnapshot.set(name, value);
             } else if (cmd.equals("GET")) {
                 if (tokens.length != 2) {
                     continue;
                 }
                 String name = tokens[1];
-                storage.get(name);
+                currentSnapshot.get(name);
             } else if (cmd.equals("UNSET")) {
                 if (tokens.length != 2) {
                     continue;
                 }
                 String name = tokens[1];
-                storage.unset(name);
+                currentSnapshot.unset(name);
             } else if (cmd.equals("NUMEQUALTO")) {
                 if (tokens.length != 2) {
                     continue;
                 }
                 String value = tokens[1];
-                storage.numEqualTo(value);
+                currentSnapshot.numEqualTo(value);
             } else if (cmd.equals("END")) {
                 break;
             } else if (cmd.equals("BEGIN")) {
-
+                snapshots.add(new Storage(currentSnapshot));
             } else if (cmd.equals("ROLLBACK")) {
-
+                if (snapshots.size() == 1) {
+                    System.out.println("NO TRANSACTION");
+                } else {
+                    snapshots.remove(snapshots.size() - 1);
+                }
             } else if (cmd.equals("COMMIT")) {
-
+                snapshots = new ArrayList<Storage>();
+                snapshots.add(currentSnapshot);
             }
         }
 
